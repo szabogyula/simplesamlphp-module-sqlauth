@@ -1,5 +1,5 @@
 {
-    "name": "simplesamlphp/simplesamlphp-module-sqlauth",
+    "name": "szabogyula/simplesamlphp-module-sqlauth",
     "description": "This is a authentication module for authenticating a user against a SQL database",
     "type": "simplesamlphp-module",
     "keywords": ["simplesamlphp", "sqlauth"],
@@ -8,6 +8,10 @@
         {
             "name": "Olav Morken",
             "email": "olavmrk@gmail.com"
+        },
+        {
+            "name": "Gyula Szabó",
+            "email": "gyufi@szabocsalad.com"
         }
     ],
     "config": {
