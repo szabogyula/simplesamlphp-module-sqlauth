@@ -26,6 +26,11 @@ Options
     If the query returns multiple rows, they will be merged into the attributes.
     Duplicate values and NULL values will be removed.
 
+`username_datatype`
+:   Optional parameter. The datatype of the username in the bindVaule method. The possible values are: 'STR' (default), 'STR_NATL', 'STR_CHAR'
+ 
+`password_datatype`
+:   Optional parameter. The datatype of the password in the bindVaule method. The possible values are: 'STR' (default), 'STR_NATL', 'STR_CHAR'
 
 Examples
 --------
