@@ -215,16 +215,16 @@ class SQL extends \SimpleSAML\Module\core\Auth\UserPassBase
     {
         switch ($datatype) {
             case 'STR':
-                return PDO::PARAM_STR;
+                return \PDO::PARAM_STR;
                 break;
             case 'STR_NATL':
-                return PDO::PARAM_STR_NATL;
+                return \PDO::PARAM_STR_NATL;
                 break;
             case 'STR_CHAR':
-                return PDO::PARAM_STR_CHAR;
+                return \PDO::PARAM_STR_CHAR;
                 break;
             default:
-                throw new Exception('Invalid datatype for username or password: '.$datatype);
+                throw new \Exception('Invalid datatype for username or password: '.$datatype);
         }
     }
 }
