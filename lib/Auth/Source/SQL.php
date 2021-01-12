@@ -25,10 +25,14 @@ class SQL extends \SimpleSAML\Module\core\Auth\UserPassBase
      */
     private $username;
 
+    private $username_datatype = 'STR';
+
     /**
      * The password we should connect to the database with.
      */
     private $password;
+
+    private $password_datatype = 'STR';
 
     /**
      * The options that we should connect to the database with.
@@ -77,6 +81,12 @@ class SQL extends \SimpleSAML\Module\core\Auth\UserPassBase
         $this->query = $config['query'];
         if (isset($config['options'])) {
             $this->options = $config['options'];
+        }
+        if (isset($config['username_datatype'])) {
+            $this->username_datatype = $config['username_datatype'];
+        }
+        if (isset($config['password_datatype'])) {
+            $this->password_datatype = $config['password_datatype'];
         }
     }
 
@@ -144,10 +154,12 @@ class SQL extends \SimpleSAML\Module\core\Auth\UserPassBase
         }
 
         try {
-            $sth->execute(['username' => $username, 'password' => $password]);
-        } catch (\PDOException $e) {
-            throw new \Exception('sqlauth:'.$this->authId.
-                ': - Failed to execute query: '.$e->getMessage());
+            $sth->bindValue(':username', $username, $this->getDataTypeConstant($this->username_datatype));
+            $sth->bindValue(':password', $password, $this->getDataTypeConstant($this->password_datatype));
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new Exception('sqlauth:' . $this->authId .
+                ': - Failed to execute query: ' . $e->getMessage());
         }
 
         try {
@@ -197,5 +209,22 @@ class SQL extends \SimpleSAML\Module\core\Auth\UserPassBase
             implode(',', array_keys($attributes)));
 
         return $attributes;
+    }
+
+    private function getDataTypeConstant($datatype)
+    {
+        switch ($datatype) {
+            case 'STR':
+                return PDO::PARAM_STR;
+                break;
+            case 'STR_NATL':
+                return PDO::PARAM_STR_NATL;
+                break;
+            case 'STR_CHAR':
+                return PDO::PARAM_STR_CHAR;
+                break;
+            default:
+                throw new Exception('Invalid datatype for username or password: '.$datatype);
+        }
     }
 }
